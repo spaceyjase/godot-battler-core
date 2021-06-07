@@ -53,7 +53,7 @@ public class ActiveTurnQueue : Node
       if (!(child is Battler battler)) continue;
 
       battlers.Add(battler);
-      battler.Connect(nameof(Battler.ReadyToAct), this, nameof(OnBattlerReadyToAct), new Array { battler });
+      battler.Connect(nameof(Battler.ReadyToAct), this, nameof(OnBattlerReadyToAct));
       if (battler.IsPartyMember)
       {
         partyMembers.Add(battler);
@@ -65,7 +65,7 @@ public class ActiveTurnQueue : Node
     }
   }
 
-  private async Task OnBattlerReadyToAct(Battler battler)
+  private async void OnBattlerReadyToAct(Battler battler)
   {
     await PlayTurn(battler);
   }
