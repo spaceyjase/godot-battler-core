@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using Godot.Collections;
 
 public class Battler : Node2D
 {
@@ -11,13 +11,16 @@ public class Battler : Node2D
   // Emitted when changing 'isSelected'. The UI will react to this for
   // player controlled battlers.
   [Signal] public delegate void SelectionToggled(bool value);
-  [Signal] public delegate void ReadyToAct();
+  [Signal] public delegate void ReadyToAct(Battler battler);
   [Signal] public delegate void ReadinessChanged(float newReadiness);
   
   private bool isActive = true;
   private float readiness;
   private bool isSelected;
   private bool isSelectable;
+
+  public bool IsPartyMember => isPartyMember;
+  public Array Actions => actions;
   
   // The turn queue will change this property when another battler is acting
   public float TimeScale { get; set; } = 1.0f;
@@ -33,7 +36,7 @@ public class Battler : Node2D
 
       if (readiness < 100f) return;
       
-      EmitSignal(nameof(ReadyToAct));
+      EmitSignal(nameof(ReadyToAct), this);
       
       // pause the process loop now this battler is ready
       SetProcess(false);
@@ -50,7 +53,7 @@ public class Battler : Node2D
     }
   }
 
-  private bool IsSelected
+  public bool IsSelected
   {
     get => isSelected;
     set
