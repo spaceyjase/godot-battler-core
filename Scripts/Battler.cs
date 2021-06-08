@@ -3,7 +3,7 @@ using Godot.Collections;
 
 public class Battler : Node2D
 {
-  [Export] private Resource stats;
+  [Export] private BattlerStats stats;
   [Export] private PackedScene aiScene;
   [Export] private Array actions;
   [Export] private bool isPartyMember;
@@ -21,7 +21,7 @@ public class Battler : Node2D
 
   public bool IsPartyMember => isPartyMember;
   public Array Actions => actions;
-  public Resource Stats => stats;
+  public BattlerStats Stats => stats;
   
   // The turn queue will change this property when another battler is acting
   public float TimeScale { get; set; } = 1.0f;
@@ -94,5 +94,21 @@ public class Battler : Node2D
   public void SetTimeScale(float newScale)
   {
     TimeScale = newScale;
+  }
+
+  private void OnBattlerStatsHealthDepleted()
+  {
+    IsActive = false;
+    if (!IsPartyMember)
+    {
+      IsSelectable = false;
+    }
+  }
+
+  public override void _Ready()
+  {
+    base._Ready();
+
+    stats.Connect(nameof(BattlerStats.HealthDepleted), this, nameof(OnBattlerStatsHealthDepleted));
   }
 }
