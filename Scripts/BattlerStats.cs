@@ -61,7 +61,7 @@ public class BattlerStats : Resource
     foreach (UpgradeableStats stat in Enum.GetValues(typeof(UpgradeableStats)))
     {
       // upgrades for each stat are unique, key-value pairs.
-      modifiers.Add(stat, new Dictionary<string, float>());
+      modifiers.Add(stat, new Dictionary<Guid, float>());
     }
   }
 
