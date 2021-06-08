@@ -21,13 +21,15 @@ public class BattlerStats : Resource
   private float health;
   private int energy;
   // Store a list of modifiers for each property->value which can be any floating-point value, +ve or -ve
-  private Dictionary<UpgradeableStats, Dictionary<Guid, float>> modifiers =
+  private readonly Dictionary<UpgradeableStats, Dictionary<Guid, float>> modifiers =
+    new Dictionary<UpgradeableStats, Dictionary<Guid, float>>();
+  private readonly Dictionary<UpgradeableStats, Dictionary<Guid, float>> multipliers =
     new Dictionary<UpgradeableStats, Dictionary<Guid, float>>();
 
   public float Attack => baseAttack;
   public float Defense => baseDefense;
   public float Speed => baseSpeed;
-  public float HitChance => baseHitChance;
+  public float HitChance => HitChance;
   public float Evasion => baseEvasion;
 
   public int Energy
@@ -62,9 +64,10 @@ public class BattlerStats : Resource
     {
       // upgrades for each stat are unique, key-value pairs.
       modifiers.Add(stat, new Dictionary<Guid, float>());
+      multipliers.Add(stat, new Dictionary<Guid, float>());
     }
   }
-
+  
   public void Reinitialise()
   {
     Health = maxHealth;
@@ -105,9 +108,22 @@ public class BattlerStats : Resource
   {
     // ReSharper disable once PossibleNullReferenceException
     var value = (float)GetType().GetProperty(stat.ToString()).GetValue(this);
-    var mods = this.modifiers[stat].Values;
+
+    var multiplier = 1f;
+    multiplier += multipliers[stat].Values.Sum();
+    if (!Mathf.IsEqualApprox(multiplier, 1f))
+    {
+      value *= multiplier;
+    }
+
+    var mods = modifiers[stat].Values;
     value += mods.Sum();
-    GetType().GetProperty(nameof(stat))?.SetValue(this, value);
+
+    value = Mathf.Round(Mathf.Max(value, 0f));
+    
+    GetType().GetProperty(stat.ToString())?.SetValue(this, value);
+    
+    GD.Print($"{stat} = {value}");
   }
 
   public Guid AddModifier(UpgradeableStats stat, float value)
@@ -120,10 +136,31 @@ public class BattlerStats : Resource
 
     return id;
   }
-
+  
   public void RemoveModifier(UpgradeableStats stat, Guid id)
   {
     if (!modifiers.TryGetValue(stat, out var mods)) return;
+    
+    if (mods.Remove(id))
+    {
+      Recalculate(stat);
+    }
+  }
+
+  public Guid AddMultiplier(UpgradeableStats stat, float value)
+  {
+    var id = Guid.NewGuid();
+    if (!multipliers.TryGetValue(stat, out var mods)) return id;
+    
+    mods.Add(id, value);
+    Recalculate(stat);
+
+    return id;
+  }
+  
+  public void RemoveMultiplier(UpgradeableStats stat, Guid id)
+  {
+    if (!multipliers.TryGetValue(stat, out var mods)) return;
     
     if (mods.Remove(id))
     {

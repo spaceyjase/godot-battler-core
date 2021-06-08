@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/BattlerStats.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+maxHealth = 100.0
+maxEnergy = 6
+baseAttack = 100.0
+baseDefense = 10.0
+baseSpeed = 70.0
+baseHitChance = 100.0
+baseEvasion = 0.0
