@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class BattlerStats : Resource
 {
@@ -18,6 +20,9 @@ public class BattlerStats : Resource
 
   private float health;
   private int energy;
+  // Store a list of modifiers for each property->value which can be any floating-point value, +ve or -ve
+  private Dictionary<UpgradeableStats, Dictionary<Guid, float>> modifiers =
+    new Dictionary<UpgradeableStats, Dictionary<Guid, float>>();
 
   public float Attack => baseAttack;
   public float Defense => baseDefense;
@@ -51,6 +56,15 @@ public class BattlerStats : Resource
     }
   }
 
+  public BattlerStats()
+  {
+    foreach (UpgradeableStats stat in Enum.GetValues(typeof(UpgradeableStats)))
+    {
+      // upgrades for each stat are unique, key-value pairs.
+      modifiers.Add(stat, new Dictionary<string, float>());
+    }
+  }
+
   public void Reinitialise()
   {
     Health = maxHealth;
@@ -60,35 +74,60 @@ public class BattlerStats : Resource
   private void SetBaseAttack(float value)
   {
     baseAttack = value;
-    Recalculate("attack");
+    Recalculate(UpgradeableStats.Attack);
   }
   
   private void SetBaseDefense(float value)
   {
     baseDefense = value;
-    Recalculate("defense");
+    Recalculate(UpgradeableStats.Defense);
   }
   
   private void SetBaseSpeed(float value)
   {
     baseSpeed = value;
-    Recalculate("speed");
+    Recalculate(UpgradeableStats.Speed);
   }
   
   private void SetBaseHitChance(float value)
   {
     baseHitChance = value;
-    Recalculate("hitChance");
+    Recalculate(UpgradeableStats.HitChance);
   }
   
   private void SetBaseEvasion(float value)
   {
     baseEvasion = value;
-    Recalculate("evasion");
+    Recalculate(UpgradeableStats.Evasion);
   }
 
-  private void Recalculate(string attack)
+  private void Recalculate(UpgradeableStats stat)
   {
-    throw new NotImplementedException();
+    // ReSharper disable once PossibleNullReferenceException
+    var value = (float)GetType().GetProperty(stat.ToString()).GetValue(this);
+    var mods = this.modifiers[stat].Values;
+    value += mods.Sum();
+    GetType().GetProperty(nameof(stat))?.SetValue(this, value);
+  }
+
+  public Guid AddModifier(UpgradeableStats stat, float value)
+  {
+    var id = Guid.NewGuid();
+    if (!modifiers.TryGetValue(stat, out var mods)) return id;
+    
+    mods.Add(id, value);
+    Recalculate(stat);
+
+    return id;
+  }
+
+  public void RemoveModifier(UpgradeableStats stat, Guid id)
+  {
+    if (!modifiers.TryGetValue(stat, out var mods)) return;
+    
+    if (mods.Remove(id))
+    {
+      Recalculate(stat);
+    }
   }
 }
