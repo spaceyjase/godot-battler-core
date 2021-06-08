@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 public class BattlerStats : Resource
 {
@@ -26,11 +27,11 @@ public class BattlerStats : Resource
   private readonly Dictionary<UpgradeableStats, Dictionary<Guid, float>> multipliers =
     new Dictionary<UpgradeableStats, Dictionary<Guid, float>>();
 
-  public float Attack => baseAttack;
-  public float Defense => baseDefense;
-  public float Speed => baseSpeed;
-  public float HitChance => HitChance;
-  public float Evasion => baseEvasion;
+  public float Attack { get; private set; }
+  public float Defense { get; private set; }
+  public float Speed { get; private set; }
+  public float HitChance { get; private set; }
+  public float Evasion { get; private set; }
 
   public int Energy
   {
@@ -106,8 +107,8 @@ public class BattlerStats : Resource
 
   private void Recalculate(UpgradeableStats stat)
   {
-    // ReSharper disable once PossibleNullReferenceException
-    var value = (float)GetType().GetProperty(stat.ToString()).GetValue(this);
+    var fieldName = $"base{stat.ToString()}";
+    var value = (float)Get(fieldName);
 
     var multiplier = 1f;
     multiplier += multipliers[stat].Values.Sum();
@@ -121,7 +122,7 @@ public class BattlerStats : Resource
 
     value = Mathf.Round(Mathf.Max(value, 0f));
     
-    GetType().GetProperty(stat.ToString())?.SetValue(this, value);
+    GetType().GetProperty(stat.ToString()).SetValue(this, value);
     
     GD.Print($"{stat} = {value}");
   }
