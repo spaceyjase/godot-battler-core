@@ -72,7 +72,7 @@ public class ActiveTurnQueue : Node
 
   private async Task PlayTurn(Battler battler)
   {
-    ActionData actionData;
+    ActionData actionData = null;
     var targets = new List<Battler>();
 
     battler.Stats.Energy += 1;
@@ -91,8 +91,7 @@ public class ActiveTurnQueue : Node
       while (!selectionComplete)
       {
         // the player has to select an action first and then a target
-        //ActionData actionData = await ToSignal(this, PlayerSelectAction(battler), "completed");
-        await ToSignal(GetTree(), "idle_frame");
+        actionData = await PlayerSelectAction(battler);
         // if an action applies an effect to the battler only, automatically set it as the target
         if (actionData.IsTargetingSelf)
         {
@@ -101,12 +100,11 @@ public class ActiveTurnQueue : Node
         }
         else
         {
-          //targets = await ToSignal(PlayerSelectTargets(actionData, potentialTargets), "completed");
-          await ToSignal(GetTree(), "idle_frame");
+          targets = await PlayerSelectTargets(actionData, potentialTargets);
+          //await ToSignal(GetTree(), "idle_frame");
         }
         // if the player selected a correct action and target, break.
-        //selectionComplete = actionData != null && targets.Count != 0;
-        selectionComplete = targets.Count != 0;
+        selectionComplete = actionData != null && targets.Count != 0;
       }
 
       // Ready to act - reset time scale and deselect the battler
@@ -115,8 +113,8 @@ public class ActiveTurnQueue : Node
     }
     else
     {
-      //actionData = battler.Actions[0];
-      //targets = potentialTargets[0];
+      actionData = battler.Actions[0] as ActionData;
+      targets = potentialTargets;
     }
   }
 
@@ -126,7 +124,7 @@ public class ActiveTurnQueue : Node
     return battler.Actions[0] as ActionData;
   }
 
-  private async Task<IEnumerable<Battler>> PlayerSelectTargets(ActionData actionData, List<Battler> potentialTargets)
+  private async Task<List<Battler>> PlayerSelectTargets(ActionData actionData, List<Battler> potentialTargets)
   {
     await ToSignal(GetTree(), "idle_frame");
     return opponents;

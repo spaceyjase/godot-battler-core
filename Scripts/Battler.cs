@@ -21,6 +21,7 @@ public class Battler : Node2D
 
   public bool IsPartyMember => isPartyMember;
   public Array Actions => actions;
+  public Resource Stats => stats;
   
   // The turn queue will change this property when another battler is acting
   public float TimeScale { get; set; } = 1.0f;
