@@ -18,6 +18,8 @@ public class BattlerStats : Resource
   [Export] private float baseSpeed = 70f;
   [Export] private float baseHitChance = 100f;
   [Export] private float baseEvasion;
+  [Export] private Elements[] weaknesses;
+  [Export] private Elements affinity = Elements.None;
 
   private float health;
   private int energy;
@@ -32,6 +34,8 @@ public class BattlerStats : Resource
   public float Speed { get; private set; }
   public float HitChance { get; private set; }
   public float Evasion { get; private set; }
+  public Elements Affinity => affinity;
+  public IEnumerable<Elements> Weaknesses => weaknesses;
 
   public int Energy
   {
@@ -58,7 +62,7 @@ public class BattlerStats : Resource
       }
     }
   }
-
+  
   public BattlerStats()
   {
     foreach (UpgradeableStats stat in Enum.GetValues(typeof(UpgradeableStats)))
