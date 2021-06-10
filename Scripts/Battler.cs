@@ -111,4 +111,9 @@ public class Battler : Node2D
 
     stats.Connect(nameof(BattlerStats.HealthDepleted), this, nameof(OnBattlerStatsHealthDepleted));
   }
+
+  public void TakeHit(Hit hit)
+  {
+    throw new System.NotImplementedException();
+  }
 }

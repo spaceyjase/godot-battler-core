@@ -15,6 +15,8 @@ public class ActionData : Resource
   public bool IsTargetingSelf { get; }
   public bool IsTargetingAll { get; }
 
+  public Elements Element => element;
+
   // The amount of readiness left to the battler after acting.
   // Can be used to design weak attacks that allow you to take a turn fast, etc.
   public float ReadinessSaved { get; set; } = 0f;

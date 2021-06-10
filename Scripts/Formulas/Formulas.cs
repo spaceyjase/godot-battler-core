@@ -44,7 +44,7 @@ namespace battler.Scripts.Formulas
 
     // Hit chance is (attacker.HitChance - defender.Evasion) * actionHitChance + affinity bonus + 
     // element tried bonus - defender affinity bonus.
-    private static float CalculateHitChance(AttackActionData data, Battler attacker, Battler defender)
+    public static float CalculateHitChance(AttackActionData data, Battler attacker, Battler defender)
     {
       var chance = attacker.Stats.HitChance - defender.Stats.Evasion;
       // Hit chance is a value between 0 and 100 for consistency with the battler's stats

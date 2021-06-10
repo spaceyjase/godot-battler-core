@@ -1,13 +1,14 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public abstract class Action : Reference
 {
   [Signal] private delegate void Finished();
 
-  private ActionData data;
-  private Battler actor;
-  private Battler[] targets;
+  protected readonly ActionData data;
+  protected readonly Battler actor;
+  protected Battler[] targets;
 
   // ctor to create from code
   protected Action(ActionData data, Battler actor, Battler[] targets)
@@ -19,13 +20,13 @@ public abstract class Action : Reference
   
   public bool Apply()
   {
-    return ApplyImpl();
+    return ApplyImpl().Result;
   }
 
-  private bool ApplyImpl()
+  protected virtual Task<bool> ApplyImpl()
   {
     EmitSignal(nameof(Finished));
-    return true;
+    return Task.FromResult(true);
   }
 
   // Returns true if the action should target opponents by default
