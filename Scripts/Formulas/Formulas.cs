@@ -6,7 +6,7 @@ namespace battler.Scripts.Formulas
   public abstract class Formulas
   {
     // The product of the attacker's attack and the action's multiplier
-    public static float CalculatePotentialDamage(AttackActionData data, Battler attacker)
+    private static float CalculatePotentialDamage(AttackActionData data, Battler attacker)
     {
       return attacker.Stats.Attack * data.DamageMultiplier;
     }
@@ -58,18 +58,17 @@ namespace battler.Scripts.Formulas
         chance += 5f; // TODO: magic number
       }
 
-      if (element != Elements.None)
+      if (element == Elements.None) return Mathf.Clamp(chance, 0f, 100f);
+      
+      // if the action's element is part of the defender's weaknesses, increase the hit rating by 10.
+      if (defender.Stats.Weaknesses.Any(e => e == Types.WeaknessMapping[element]))
       {
-        // if the action's element is part of the defender's weaknesses, increase the hit rating by 10.
-        if (defender.Stats.Weaknesses.Any(e => e == Types.WeaknessMapping[element]))
-        {
-          chance += 10f; // TODO: magic
-        }
-        // However, if the defender has an affinity with the action's element, decrease the hit rating by 10.
-        if (Types.WeaknessMapping[defender.Stats.Affinity] == element)
-        {
-          chance -= 10f;
-        }
+        chance += 10f; // TODO: magic
+      }
+      // However, if the defender has an affinity with the action's element, decrease the hit rating by 10.
+      if (Types.WeaknessMapping[defender.Stats.Affinity] == element)
+      {
+        chance -= 10f;
       }
 
       return Mathf.Clamp(chance, 0f, 100f);

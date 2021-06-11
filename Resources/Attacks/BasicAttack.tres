@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/AttackActionData.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+label = "Basic attack"
+energyCost = 0
+element = 0
+isTargetingSelf = false
+isTargetingAll = false
+readinessSaved = 20.0
+damageMultiplier = 0.8
+hitChance = 100.0

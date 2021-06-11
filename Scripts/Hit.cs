@@ -4,14 +4,14 @@
 // Encapsulating calculations for how hits are applied based on some properties.
 public class Hit : Reference
 {
-  private int damage;
-  private float hitChance;
+  public int Damage { get; }
+  public float HitChance { get; }
 
   public Hit(int damage, float hitChance = 100f)
   {
-    this.damage = damage;
-    this.hitChance = hitChance;
+    this.Damage = damage;
+    this.HitChance = hitChance;
   }
 
-  public bool DoesHit => GD.Randf() * 100f < hitChance;
+  public bool DoesHit => GD.Randf() * 100f < HitChance;
 }

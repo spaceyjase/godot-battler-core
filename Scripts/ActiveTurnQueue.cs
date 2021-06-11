@@ -35,11 +35,11 @@ public class ActiveTurnQueue : Node
     }
   }
 
-  private List<Battler> partyMembers;
-  private List<Battler> opponents;
+  private readonly List<Battler> partyMembers = new List<Battler>();
+  private readonly List<Battler> opponents = new List<Battler>();
   
   // All battlers in the encounter are children of this node.
-  private List<Battler> battlers = new List<Battler>();
+  private readonly List<Battler> battlers = new List<Battler>();
   
   private bool isActive = true;
   private float timeScale = 1.0f;
@@ -65,9 +65,9 @@ public class ActiveTurnQueue : Node
     }
   }
 
-  private async void OnBattlerReadyToAct(Battler battler)
+  private void OnBattlerReadyToAct(Battler battler)
   {
-    await PlayTurn(battler);
+    Task.FromResult(PlayTurn(battler));
   }
 
   private async Task PlayTurn(Battler battler)
@@ -113,15 +113,20 @@ public class ActiveTurnQueue : Node
     }
     else
     {
-      actionData = battler.Actions[0] as ActionData;
+      actionData = battler.Actions[0];
       targets = potentialTargets;
     }
+    
+    // Create a new attack action based on the action data and targets
+    var action = new AttackAction(actionData, battler, targets.ToArray());
+    battler.Act(action);
+    await ToSignal(battler, nameof(Battler.ActionFinished));
   }
 
   private async Task<ActionData> PlayerSelectAction(Battler battler)
   {
     await ToSignal(GetTree(), "idle_frame");
-    return battler.Actions[0] as ActionData;
+    return battler.Actions[0];
   }
 
   private async Task<List<Battler>> PlayerSelectTargets(ActionData actionData, List<Battler> potentialTargets)

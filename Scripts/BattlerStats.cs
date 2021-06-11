@@ -48,7 +48,7 @@ public class BattlerStats : Resource
     }
   }
 
-  private float Health
+  public float Health
   {
     get => health;
     set
@@ -76,6 +76,11 @@ public class BattlerStats : Resource
   public void Reinitialise()
   {
     Health = maxHealth;
+    Attack = (float)Get(nameof(baseAttack));
+    Defense = (float)Get(nameof(baseDefense));
+    Speed = (float)Get(nameof(baseSpeed));
+    HitChance = (float)Get(nameof(baseHitChance));
+    Evasion = (float)Get(nameof(baseEvasion));
   }
 
   // TODO: revisit

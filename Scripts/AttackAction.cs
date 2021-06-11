@@ -6,11 +6,11 @@ public class AttackAction : Action
 {
   private int[] hits;
   
-  public AttackAction(AttackActionData data, Battler actor, Battler[] targets) : base(data, actor, targets)
+  public AttackAction(ActionData data, Battler actor, Battler[] targets) : base(data, actor, targets)
   {
   }
 
-  public int CalculatePotentialDamageFor(Battler target)
+  private int CalculatePotentialDamageFor(Battler target)
   {
     return Formulas.CalculateBaseDamage(data as AttackActionData, actor, target);
   }
