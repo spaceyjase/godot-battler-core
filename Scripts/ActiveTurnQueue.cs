@@ -101,10 +101,10 @@ public class ActiveTurnQueue : Node
         else
         {
           targets = await PlayerSelectTargets(actionData, potentialTargets);
-          //await ToSignal(GetTree(), "idle_frame");
+          await ToSignal(GetTree(), "idle_frame");
         }
         // if the player selected a correct action and target, break.
-        selectionComplete = actionData != null && targets.Count != 0;
+        selectionComplete = targets.Count != 0;
       }
 
       // Ready to act - reset time scale and deselect the battler
@@ -119,7 +119,7 @@ public class ActiveTurnQueue : Node
     
     // Create a new attack action based on the action data and targets
     var action = new AttackAction(actionData, battler, targets.ToArray());
-    battler.Act(action);
+    await battler.Act(action);
     await ToSignal(battler, nameof(Battler.ActionFinished));
   }
 

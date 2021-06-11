@@ -7,6 +7,11 @@ public class Hit : Reference
   public int Damage { get; }
   public float HitChance { get; }
 
+  public Hit()
+  {
+    
+  }
+
   public Hit(int damage, float hitChance = 100f)
   {
     this.Damage = damage;

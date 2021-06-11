@@ -4,12 +4,12 @@
 
 [resource]
 script = ExtResource( 1 )
-maxHealth = 100.0
+maxHealth = 80.0
 maxEnergy = 6
-baseAttack = 10.0
-baseDefense = 10.0
-baseSpeed = 70.0
+baseAttack = 12.0
+baseDefense = 3.0
+baseSpeed = 55.0
 baseHitChance = 100.0
-baseEvasion = 0.0
+baseEvasion = 10.0
 weaknesses = null
 affinity = 0

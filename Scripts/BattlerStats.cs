@@ -72,7 +72,7 @@ public class BattlerStats : Resource
       multipliers.Add(stat, new Dictionary<Guid, float>());
     }
   }
-  
+
   public void Reinitialise()
   {
     Health = maxHealth;
@@ -81,37 +81,6 @@ public class BattlerStats : Resource
     Speed = (float)Get(nameof(baseSpeed));
     HitChance = (float)Get(nameof(baseHitChance));
     Evasion = (float)Get(nameof(baseEvasion));
-  }
-
-  // TODO: revisit
-  private void SetBaseAttack(float value)
-  {
-    baseAttack = value;
-    Recalculate(UpgradeableStats.Attack);
-  }
-  
-  private void SetBaseDefense(float value)
-  {
-    baseDefense = value;
-    Recalculate(UpgradeableStats.Defense);
-  }
-  
-  private void SetBaseSpeed(float value)
-  {
-    baseSpeed = value;
-    Recalculate(UpgradeableStats.Speed);
-  }
-  
-  private void SetBaseHitChance(float value)
-  {
-    baseHitChance = value;
-    Recalculate(UpgradeableStats.HitChance);
-  }
-  
-  private void SetBaseEvasion(float value)
-  {
-    baseEvasion = value;
-    Recalculate(UpgradeableStats.Evasion);
   }
 
   private void Recalculate(UpgradeableStats stat)

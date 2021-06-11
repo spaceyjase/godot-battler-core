@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
 
@@ -68,7 +69,7 @@ public class Battler : Node2D
     {
       if (value && !isSelectable)
       {
-        GD.Print("Battler isn't selectable!");
+        GD.Print("Battler '{Name}' isn't selectable!");
       }
 
       isSelected = value;
@@ -145,12 +146,12 @@ public class Battler : Node2D
     }
   }
 
-  public void Act(Action action)
+  public async Task Act(Action action)
   {
     // If the action costs energy, subtract it.
     stats.Energy -= action.EnergyCost;
     // Wait for the action to apply; it's a coroutine so we need to yield.
-    action.Apply();
+    await action.Apply();
     // Reset readiness. The value can be greater than zero, depending on the action.
     Readiness = action.ReadinessSaved;
     // Don't set process back to 'true' if the battler isn't active, so its readiness doesn't update.

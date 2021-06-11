@@ -5,7 +5,11 @@ using Godot;
 public class AttackAction : Action
 {
   private int[] hits;
-  
+
+  public AttackAction()
+  {
+  }
+
   public AttackAction(ActionData data, Battler actor, Battler[] targets) : base(data, actor, targets)
   {
   }

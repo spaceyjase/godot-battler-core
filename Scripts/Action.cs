@@ -10,6 +10,11 @@ public abstract class Action : Reference
   protected readonly Battler actor;
   protected Battler[] targets;
 
+  public Action()
+  {
+    
+  }
+
   // ctor to create from code
   protected Action(ActionData data, Battler actor, Battler[] targets)
   {
@@ -18,9 +23,9 @@ public abstract class Action : Reference
     this.targets = targets;
   }
   
-  public bool Apply()
+  public async Task<bool> Apply()
   {
-    return ApplyImpl().Result;
+    return await ApplyImpl();
   }
 
   protected virtual Task<bool> ApplyImpl()
