@@ -1,21 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scenes/Battler.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Executioner.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/ActiveTurnQueue.cs" type="Script" id=2]
-[ext_resource path="res://Resources/Stats/IanBattlerStats.tres" type="Resource" id=3]
-[ext_resource path="res://Resources/Stats/PuppyBattlerStats.tres" type="Resource" id=4]
-[ext_resource path="res://Resources/Attacks/BasicAttack.tres" type="Resource" id=5]
+[ext_resource path="res://Scenes/LargeKnight.tscn" type="PackedScene" id=3]
 
 [node name="CombatDemo" type="Node2D"]
 
 [node name="ActiveTurnQueue" type="Node2D" parent="."]
 script = ExtResource( 2 )
 
-[node name="Ian" parent="ActiveTurnQueue" instance=ExtResource( 1 )]
-stats = ExtResource( 3 )
-actions = [ ExtResource( 5 ) ]
-isPartyMember = true
+[node name="Executioner" parent="ActiveTurnQueue" instance=ExtResource( 1 )]
 
-[node name="Puppy" parent="ActiveTurnQueue" instance=ExtResource( 1 )]
-stats = ExtResource( 4 )
-actions = [ ExtResource( 5 ) ]
+[node name="Battler" parent="ActiveTurnQueue/Executioner" instance=ExtResource( 3 )]

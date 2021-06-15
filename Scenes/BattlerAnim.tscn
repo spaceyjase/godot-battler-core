@@ -1,8 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Assets/Executioner/Executioner_Idle_1.png" type="Texture" id=1]
-
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "attack"
 step = 0.05
 tracks/0/type = "value"
@@ -32,7 +30,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "die"
 step = 0.05
 tracks/0/type = "value"
@@ -72,8 +70,7 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "setup"
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
@@ -131,15 +128,11 @@ tracks/0/keys = {
 
 [node name="Pivot" type="Position2D" parent="."]
 
-[node name="Executioner_Idle_1" type="Sprite" parent="Pivot"]
-texture = ExtResource( 1 )
-offset = Vector2( 0, -16 )
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Pivot"]
 autoplay = "setup"
-anims/attack = SubResource( 2 )
-anims/die = SubResource( 3 )
-anims/setup = SubResource( 1 )
+anims/attack = SubResource( 1 )
+anims/die = SubResource( 2 )
+anims/setup = SubResource( 3 )
 anims/take_damage = SubResource( 4 )
 
 [node name="AnimationPlayerDamage" type="AnimationPlayer" parent="Pivot"]
