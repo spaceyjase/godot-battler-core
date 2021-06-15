@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
+using battler.Scripts.Enum;
 
-public abstract class Types
+namespace battler.Scripts
 {
-  public static Dictionary<Elements, Elements> WeaknessMapping { get; } = new Dictionary<Elements, Elements>
+  public abstract class Types
   {
-    { Elements.None, Elements.Nothing },
-    { Elements.Code, Elements.Art },
-    { Elements.Art, Elements.Design },
-    { Elements.Design, Elements.Code },
-    { Elements.Bug, Elements.Nothing },
-  };
+    public static Dictionary<Elements, Elements> WeaknessMapping { get; } = new Dictionary<Elements, Elements>
+    {
+      { Elements.None, Elements.Nothing },
+      { Elements.Code, Elements.Art },
+      { Elements.Art, Elements.Design },
+      { Elements.Design, Elements.Code },
+      { Elements.Bug, Elements.Nothing },
+    };
+  }
 }

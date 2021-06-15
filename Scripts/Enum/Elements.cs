@@ -1,9 +1,12 @@
-﻿public enum Elements
+﻿namespace battler.Scripts.Enum
 {
-  Nothing = -1,
-  None,
-  Code,
-  Design,
-  Art,
-  Bug
+  public enum Elements
+  {
+    Nothing = -1,
+    None,
+    Code,
+    Design,
+    Art,
+    Bug
+  }
 }

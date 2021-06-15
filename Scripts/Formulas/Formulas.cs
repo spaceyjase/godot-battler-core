@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using battler.Scripts.Enum;
 using Godot;
 
 namespace battler.Scripts.Formulas

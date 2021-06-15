@@ -1,10 +1,13 @@
-﻿public enum UpgradeableStats
+﻿namespace battler.Scripts.Enum
 {
-  MaxHealth,
-  MaxEnergy,
-  Attack,
-  Defense,
-  Speed,
-  HitChance,
-  Evasion
+  public enum UpgradeableStats
+  {
+    MaxHealth,
+    MaxEnergy,
+    Attack,
+    Defense,
+    Speed,
+    HitChance,
+    Evasion
+  }
 }
