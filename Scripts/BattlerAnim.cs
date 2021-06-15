@@ -38,6 +38,9 @@ namespace battler.Scenes
             tween = GetNode<Tween>("Tween");
 
             startPosition = Position;
+            var scale = Scale;
+            scale.x = LookDirection == Direction.RIGHT ? -1f : 1;
+            Scale = scale;
         }
 
         public void Play(string animationName)

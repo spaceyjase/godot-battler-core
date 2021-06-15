@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using battler.Scenes;
 using Godot;
 using Godot.Collections;
 
@@ -23,11 +24,14 @@ namespace battler.Scripts
     [Signal] public delegate void HitMissed();
     // Emit when the battler finished their action and arrived back at their resting position.
     [Signal] public delegate void ActionFinished();
+    // Emitted when an animation has finished playing.
+    [Signal] public delegate void AnimationFinished(string animationName);
   
     private bool isActive = true;
     private float readiness;
     private bool isSelected;
     private bool isSelectable;
+    private BattlerAnim battlerAnim;
 
     public bool IsPartyMember => isPartyMember;
     public Array<ActionData> Actions => actions;
@@ -75,6 +79,11 @@ namespace battler.Scripts
         }
 
         isSelected = value;
+        if (isSelected)
+        {
+          battlerAnim.MoveForward();
+        }
+        
         EmitSignal(nameof(SelectionToggled), isSelected);
       }
     }
@@ -93,6 +102,7 @@ namespace battler.Scripts
     }
 
     public bool IsPlayerControlled => aiScene == null;
+    public BattlerAnim BattlerAnimation => battlerAnim;
 
     public override void _Process(float delta)
     {
@@ -127,11 +137,18 @@ namespace battler.Scripts
 
       stats.Reinitialise();
       stats.Connect(nameof(BattlerStats.HealthDepleted), this, nameof(OnBattlerStatsHealthDepleted));
+
+      battlerAnim = GetNode<BattlerAnim>("BattlerAnim");
     }
 
     private void TakeDamage(int amount)
     {
       stats.Health -= amount;
+      if (stats.Health > 0f)
+      {
+        battlerAnim.Play("take_damage");
+      }
+
       GD.Print($"{Name} took {amount} damage. Health is now {stats.Health}");
     }
 
@@ -154,6 +171,7 @@ namespace battler.Scripts
       stats.Energy -= action.EnergyCost;
       // Wait for the action to apply; it's a coroutine so we need to yield.
       await action.Apply();
+      battlerAnim.MoveBack();
       // Reset readiness. The value can be greater than zero, depending on the action.
       Readiness = action.ReadinessSaved;
       // Don't set process back to 'true' if the battler isn't active, so its readiness doesn't update.
@@ -163,6 +181,11 @@ namespace battler.Scripts
 
       // Emit signal to indicate the end of a turn for a player-controlled character.
       EmitSignal(nameof(ActionFinished));
+    }
+
+    private void OnBattlerAnimAnimationFinished(string animationName)
+    {
+      EmitSignal(nameof(AnimationFinished), animationName);
     }
   }
 }
