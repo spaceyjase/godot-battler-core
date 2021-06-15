@@ -139,6 +139,7 @@ anims/setup = SubResource( 3 )
 anims/take_damage = SubResource( 4 )
 
 [node name="AnimationPlayerDamage" type="AnimationPlayer" parent="Pivot"]
+anims/take_damage = SubResource( 4 )
 
 [node name="Tween" type="Tween" parent="."]
 

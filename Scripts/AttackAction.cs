@@ -30,9 +30,12 @@ namespace battler.Scripts
         var hitChance = Formulas.Formulas.CalculateHitChance(data as AttackActionData, actor, target);
         var damage = CalculatePotentialDamageFor(target);
         var hit = new Hit(damage, hitChance);
-        
-        anim.Connect(nameof(BattlerAnim.Triggered), this, nameof(OnBattlerAnimTriggered), new Array{ target, hit });
-        
+
+        if (!anim.IsConnected(nameof(BattlerAnim.Triggered), this, nameof(OnBattlerAnimTriggered)))
+        {
+          anim.Connect(nameof(BattlerAnim.Triggered), this, nameof(OnBattlerAnimTriggered), new Array { target, hit });
+        }
+
         anim.Play("attack");
         await ToSignal(target, nameof(Battler.AnimationFinished));
       }

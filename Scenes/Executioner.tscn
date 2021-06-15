@@ -13,4 +13,6 @@ script = ExtResource( 1 )
 texture = ExtResource( 3 )
 offset = Vector2( 0, -16 )
 
+[connection signal="AnimationFinished" from="BattlerAnim" to="." method="OnBattlerAnimAnimationFinished"]
+
 [editable path="BattlerAnim"]

@@ -4,7 +4,7 @@
 [ext_resource path="res://Scenes/BattlerAnim.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Large Knight - Standard/LargeKnight_Idle_1.png" type="Texture" id=3]
 
-[node name="Battler" type="Node2D"]
+[node name="LargeKnight" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="BattlerAnim" parent="." instance=ExtResource( 2 )]
@@ -12,5 +12,7 @@ script = ExtResource( 1 )
 [node name="LargeKnight_Idle_1" type="Sprite" parent="BattlerAnim/Pivot" index="0"]
 texture = ExtResource( 3 )
 offset = Vector2( 0, -16 )
+
+[connection signal="AnimationFinished" from="BattlerAnim" to="." method="OnBattlerAnimAnimationFinished"]
 
 [editable path="BattlerAnim"]

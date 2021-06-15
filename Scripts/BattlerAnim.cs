@@ -38,9 +38,9 @@ namespace battler.Scenes
             tween = GetNode<Tween>("Tween");
 
             startPosition = Position;
-            var scale = Scale;
-            scale.x = LookDirection == Direction.RIGHT ? -1f : 1;
-            Scale = scale;
+            //var scale = Scale;
+            //scale.x = LookDirection == Direction.RIGHT ? -1 : 1f;
+            //Scale = scale;
         }
 
         public void Play(string animationName)
@@ -75,7 +75,7 @@ namespace battler.Scenes
                 this,
                 "position",
                 Position,
-                Position + Vector2.Left * Scale.x * 40f,
+                Position + Vector2.Right * Scale.x * 40f,
                 0.3f,
                 Tween.TransitionType.Quart);
             tween.Start();

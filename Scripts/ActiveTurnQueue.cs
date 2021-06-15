@@ -73,6 +73,8 @@ namespace battler.Scripts
       ActionData actionData = null;
       var targets = new List<Battler>();
 
+      battler.IsSelected = true;
+
       battler.Stats.Energy += 1;
       var opponentTargets = battler.IsPartyMember ? opponents : partyMembers;
       var potentialTargets = opponentTargets.Where(opponentTarget => opponentTarget.IsSelectable).ToList();

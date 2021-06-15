@@ -183,7 +183,7 @@ namespace battler.Scripts
       EmitSignal(nameof(ActionFinished));
     }
 
-    private void OnBattlerAnimAnimationFinished(string animationName)
+    public void OnBattlerAnimAnimationFinished(string animationName)
     {
       EmitSignal(nameof(AnimationFinished), animationName);
     }
