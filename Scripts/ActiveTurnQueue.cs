@@ -7,6 +7,9 @@ namespace battler.Scripts
 {
   public class ActiveTurnQueue : Node
   {
+    // Emit a signal when play turn has finished. Used to play the next battler's turn.
+    [Signal] private delegate void PlayerTurnFinished();
+    
     public bool IsActive
     {
       get => isActive;
@@ -35,6 +38,11 @@ namespace battler.Scripts
 
     private readonly List<Battler> partyMembers = new List<Battler>();
     private readonly List<Battler> opponents = new List<Battler>();
+    
+    // If true, the player is currently playing a turn.
+    private bool isPlayerPlaying = false;
+    // Queue of player-controlled battlers that have to take turns.
+    private readonly Queue<Battler> playerQueue = new Queue<Battler>();
   
     // All battlers in the encounter are children of this node.
     private readonly List<Battler> battlers = new List<Battler>();
@@ -45,6 +53,8 @@ namespace battler.Scripts
     public override void _Ready()
     {
       base._Ready();
+
+      Connect(nameof(PlayerTurnFinished), this, nameof(OnPlayerTurnFinished));
 
       foreach (var child in GetChildren())
       {
@@ -65,7 +75,16 @@ namespace battler.Scripts
 
     private void OnBattlerReadyToAct(Battler battler)
     {
-      Task.FromResult(PlayTurn(battler));
+      // If the battler is controlled by the player but another player-controlled battler is
+      // currently in the middle of a turn, add this one to the queue.
+      if (battler.IsPlayerControlled && isPlayerPlaying)
+      {
+        playerQueue.Enqueue(battler);
+      }
+      else
+      {
+        Task.FromResult(PlayTurn(battler));
+      }
     }
 
     private async Task PlayTurn(Battler battler)
@@ -85,6 +104,9 @@ namespace battler.Scripts
       
         // slow down a bit while the player is selected
         TimeScale = 0.05f;  // TODO: magic number
+
+        // It's the start of a player-controlled battler's turn.
+        isPlayerPlaying = true;
       
         // wait for the player to select a valid action and target
         var selectionComplete = false;
@@ -121,6 +143,11 @@ namespace battler.Scripts
       var action = new AttackAction(actionData, battler, targets.ToArray());
       await battler.Act(action);
       await ToSignal(battler, nameof(Battler.ActionFinished));
+
+      if (battler.IsPlayerControlled)
+      {
+        EmitSignal(nameof(PlayerTurnFinished));
+      }
     }
 
     private async Task<ActionData> PlayerSelectAction(Battler battler)
@@ -133,6 +160,21 @@ namespace battler.Scripts
     {
       await ToSignal(GetTree(), "idle_frame");
       return opponents;
+    }
+
+    private void OnPlayerTurnFinished()
+    {
+      // When a player-controlled battler finishes their turn and the queue is empty,
+      // the player is no longer playing.
+      if (playerQueue.Count == 0)
+      {
+        isPlayerPlaying = false;
+      }
+      else
+      {
+        // otherwise, pop from the queue and let the corresponding battler take a turn.
+        Task.FromResult(PlayTurn(playerQueue.Dequeue()));
+      }
     }
   }
 }
