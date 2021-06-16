@@ -25,12 +25,14 @@ position = Vector2( 395.502, 657.906 )
 scale = Vector2( 5, 5 )
 stats = ExtResource( 3 )
 actions = [ ExtResource( 5 ) ]
+isPartyMember = true
 
 [node name="LargeKnight2" parent="ActiveTurnQueue" instance=ExtResource( 7 )]
 position = Vector2( 266.29, 764.475 )
 scale = Vector2( 5, 5 )
 stats = ExtResource( 3 )
 actions = [ ExtResource( 5 ) ]
+isPartyMember = true
 
 [node name="Executioner" parent="ActiveTurnQueue" instance=ExtResource( 1 )]
 position = Vector2( 1479.31, 710.139 )

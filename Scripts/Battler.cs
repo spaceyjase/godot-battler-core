@@ -119,24 +119,31 @@ namespace battler.Scripts
     private void OnBattlerStatsHealthDepleted()
     {
       IsActive = false;
-      if (!IsPartyMember)
-      {
-        IsSelectable = false;
-      }
+      if (IsPartyMember) return;
+      
+      IsSelectable = false;
+      battlerAnim.QueueAnimation("die");
     }
 
     public override void _Ready()
     {
       base._Ready();
 
-      stats = stats.Duplicate() as BattlerStats;
       if (stats == null)
       {
         throw new ApplicationException("Stats are null");
       }
+      stats = stats.Duplicate() as BattlerStats;
 
-      stats.Reinitialise();
-      stats.Connect(nameof(BattlerStats.HealthDepleted), this, nameof(OnBattlerStatsHealthDepleted));
+      if (stats != null)
+      {
+        stats.Reinitialise();
+        stats.Connect(nameof(BattlerStats.HealthDepleted), this, nameof(OnBattlerStatsHealthDepleted));
+      }
+      else
+      {
+        throw new ApplicationException("Stats (duplicate) are null");
+      }
 
       battlerAnim = GetNode<BattlerAnim>("BattlerAnim");
     }
