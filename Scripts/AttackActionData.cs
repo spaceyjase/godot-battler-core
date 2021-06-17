@@ -9,5 +9,10 @@ namespace battler.Scripts
 
     public float DamageMultiplier => damageMultiplier;
     public float HitChance => hitChance;
+
+    public float CalculatePotentialDamageFor(Battler actor)
+    {
+      return Formulas.Formulas.CalculatePotentialDamage(this, actor);
+    }
   }
 }

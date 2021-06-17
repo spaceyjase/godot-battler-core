@@ -64,7 +64,9 @@ namespace battler.Scripts
         }
       }
     }
-  
+
+    public float MaxHealth => maxHealth;
+
     public BattlerStats()
     {
       foreach (UpgradeableStats stat in System.Enum.GetValues(typeof(UpgradeableStats)))

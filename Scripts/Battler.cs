@@ -36,6 +36,7 @@ namespace battler.Scripts
     public bool IsPartyMember => isPartyMember;
     public Array<ActionData> Actions => actions;
     public BattlerStats Stats => stats;
+    public bool IsFallen => stats.Health <= 0f;
   
     // The turn queue will change this property when another battler is acting
     public float TimeScale { get; set; } = 1.0f;

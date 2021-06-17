@@ -7,7 +7,7 @@ namespace battler.Scripts.Formulas
   public abstract class Formulas
   {
     // The product of the attacker's attack and the action's multiplier
-    private static float CalculatePotentialDamage(AttackActionData data, Battler attacker)
+    public static float CalculatePotentialDamage(AttackActionData data, Battler attacker)
     {
       return attacker.Stats.Attack * data.DamageMultiplier;
     }
