@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using battler.Scripts.Enum;
@@ -14,11 +15,16 @@ namespace battler.Scripts.AI
     // An array of battlers that are in the opposing party.
     private readonly List<Battler> opponents = new List<Battler>();
     // Store a dictionary of opponents that are weak to this action.
-    private Dictionary<ActionData, List<Battler>> weaknesses = new Dictionary<ActionData, List<Battler>>();
+    private readonly Dictionary<ActionData, List<Battler>> weaknesses = new Dictionary<ActionData, List<Battler>>();
+    // Queue of actions; if not empty, the action is popped from here on the next turn. Used
+    // to plan actions over multiple turns (e.g. Boss charging energy).
+    private readonly Queue<ActionData> nextActions = new Queue<ActionData>();
+    private readonly RandomNumberGenerator rng = new RandomNumberGenerator();
 
     // Filters and saves the list of party members and opponents.
     public void Setup(Battler _actor, IEnumerable<Battler> battlers)
     {
+      rng.Randomize();
       actor = _actor;
       foreach (var battler in battlers)
       {
@@ -35,6 +41,46 @@ namespace battler.Scripts.AI
 
       CalculateWeaknesses();
     }
+    
+    // Returns a structure representing an action and its targets.
+    public Choice Choose()
+    {
+      if (opponents.Count == 0)
+      {
+        GD.PrintErr("You must call Setup() on the AI and give it opponents!");
+      }
+
+      var battleInfo = GatherInformation();
+
+      var targets = new List<Battler>();
+      var action = nextActions.Count == 0 ? nextActions.Dequeue() : ChooseAction(battleInfo);
+      if (action.IsTargetingSelf)
+      {
+        targets.Add(actor);
+      }
+      else
+      {
+        targets.AddRange(ChooseTargets(action, battleInfo));
+      }
+
+      return new Choice
+      {
+        Action = action,
+        Targets = targets
+      };
+    }
+
+    // TODO: override this
+    private Battler[] ChooseTargets(ActionData action, BattleInfo battleInfo)
+    {
+      return new Battler[]{ battleInfo.WeakestTarget };
+    }
+
+    // TODO: override this
+    private ActionData ChooseAction(BattleInfo battleInfo)
+    {
+      return actor.Actions[0];
+    }
 
     private void CalculateWeaknesses()
     {
@@ -48,13 +94,13 @@ namespace battler.Scripts.AI
       }
     }
 
-    private BattlerAIInfo GatherInformation()
+    private BattleInfo GatherInformation()
     {
       var actions = GetAvailableActions().ToArray();
       var attackActions = GetAttackActionsFrom(actions).ToArray();
       var defensiveActions = GetDefensiveActionsFrom(actions);
 
-      var info = new BattlerAIInfo
+      var info = new BattleInfo
       {
         WeakestTarget = GetBattlerWithLowestHealth(opponents),
         WeakestAlly = GetBattlerWithLowestHealth(party),
