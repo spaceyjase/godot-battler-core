@@ -21,6 +21,8 @@ namespace battler.Scripts.StatusEffects
     public float DurationSeconds => durationSeconds;
     public bool IsTicking => isTicking;
     public float TickingInterval => tickingIntervalSeconds;
+    public float EffectPower => effectPower;
+    public float EffectRate => effectRate;
 
     // The total theoretical damage the effect will inflict over time (for ticking effects).
     public float CalculateTotalDamage()
