@@ -18,6 +18,10 @@ namespace battler.Scripts.StatusEffects
     // Damage inflicted by the effect every tick.
     [Export] private float tickingDamage = 3f;
 
+    public float DurationSeconds => durationSeconds;
+    public bool IsTicking => isTicking;
+    public float TickingInterval => tickingIntervalSeconds;
+
     // The total theoretical damage the effect will inflict over time (for ticking effects).
     public float CalculateTotalDamage()
     {
