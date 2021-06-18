@@ -70,14 +70,12 @@ namespace battler.Scripts.AI
       };
     }
 
-    // TODO: override this
-    private Battler[] ChooseTargets(ActionData action, BattleInfo battleInfo)
+    protected virtual IEnumerable<Battler> ChooseTargets(ActionData action, BattleInfo battleInfo)
     {
-      return new Battler[]{ battleInfo.WeakestTarget };
+      return new[]{ battleInfo.WeakestTarget };
     }
 
-    // TODO: override this
-    private ActionData ChooseAction(BattleInfo battleInfo)
+    protected virtual ActionData ChooseAction(BattleInfo battleInfo)
     {
       return actor.Actions[0];
     }
@@ -110,7 +108,7 @@ namespace battler.Scripts.AI
         AvailableActions = actions,
         AttackActions = attackActions,
         DefensiveActions = defensiveActions,
-        StongestActions = FindMostDamagingActionFrom(attackActions)
+        StongestAction = FindMostDamagingActionFrom(attackActions)
       };
 
       return info;

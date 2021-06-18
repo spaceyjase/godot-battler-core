@@ -71,6 +71,11 @@ namespace battler.Scripts
           opponents.Add(battler);
         }
       }
+
+      foreach (var battler in battlers)
+      {
+        battler.Setup(battlers);
+      }
     }
 
     private void OnBattlerReadyToAct(Battler battler)
@@ -135,8 +140,10 @@ namespace battler.Scripts
       }
       else
       {
-        actionData = battler.Actions[0];
-        targets = potentialTargets;
+        var result = battler.AI.Choose();
+        actionData = result.Action;
+        targets = result.Targets;
+        GD.Print($"{Name} attacks {targets[0].Name} with action {actionData.Label}");
       }
     
       // Create a new attack action based on the action data and targets

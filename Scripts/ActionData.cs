@@ -21,6 +21,7 @@ namespace battler.Scripts
     // Used to filter potential targets on a battler's turn.
     public bool IsTargetingSelf => isTargetingSelf;
     public bool IsTargetingAll => isTargetingAll;
+    public string Label => label;
 
     public Elements Element => element;
 

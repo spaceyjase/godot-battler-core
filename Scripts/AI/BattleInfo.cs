@@ -3,7 +3,7 @@ using battler.Scripts.Enum;
 
 namespace battler.Scripts.AI
 {
-  internal struct BattleInfo
+  public struct BattleInfo
   {
     public Battler WeakestTarget { get; set; }
     public Battler WeakestAlly { get; set; }
@@ -13,6 +13,6 @@ namespace battler.Scripts.AI
     public ActionData[] AvailableActions { get; set; }
     public AttackActionData[] AttackActions { get; set; }
     public IEnumerable<ActionData> DefensiveActions { get; set; }
-    public AttackActionData StongestActions { get; set; }
+    public AttackActionData StongestAction { get; set; }
   }
 }

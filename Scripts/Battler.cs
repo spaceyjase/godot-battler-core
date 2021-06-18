@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using battler.Scenes;
+using battler.Scripts.AI;
 using Godot;
 using Godot.Collections;
 
@@ -32,6 +34,7 @@ namespace battler.Scripts
     private bool isSelected;
     private bool isSelectable;
     private BattlerAnim battlerAnim;
+    private BattlerAI aiInstance;
 
     public bool IsPartyMember => isPartyMember;
     public Array<ActionData> Actions => actions;
@@ -40,7 +43,21 @@ namespace battler.Scripts
   
     // The turn queue will change this property when another battler is acting
     public float TimeScale { get; set; } = 1.0f;
-  
+
+    public void Setup(IEnumerable<Battler> battlers)
+    {
+      if (aiScene == null) return;
+      
+      aiInstance = aiScene.Instance() as BattlerAI;
+      if (aiInstance == null) GD.PrintErr("Can't create AI scene!");
+      
+      aiInstance?.Setup(this, battlers);
+      AddChild(aiInstance);
+    }
+
+    // The BattlerAI instance attached to this battler.
+    public BattlerAI AI => aiInstance;
+
     // When this value reaches 100, the battler is ready to take their turn
     private float Readiness
     {

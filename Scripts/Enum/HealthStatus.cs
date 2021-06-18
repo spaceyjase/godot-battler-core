@@ -1,6 +1,6 @@
 ﻿namespace battler.Scripts.Enum
 {
-  internal enum HealthStatus
+  public enum HealthStatus
   {
     Critical,
     Low,
