@@ -93,7 +93,7 @@ namespace battler.Scripts
       {
         if (value && !isSelectable)
         {
-          GD.Print("Battler '{Name}' isn't selectable!");
+          GD.Print($"Battler '{Name}' isn't selectable!");
         }
 
         isSelected = value;
@@ -194,11 +194,14 @@ namespace battler.Scripts
     {
       // If the action costs energy, subtract it.
       stats.Energy -= action.EnergyCost;
+      
       // Wait for the action to apply; it's a coroutine so we need to yield.
       await action.Apply();
       battlerAnim.MoveBack();
+      
       // Reset readiness. The value can be greater than zero, depending on the action.
       Readiness = action.ReadinessSaved;
+      
       // Don't set process back to 'true' if the battler isn't active, so its readiness doesn't update.
       // That can be the case if a "stop" or "petrify" status effect is active, or during animation
       // that interrupts the normal flow of battle.

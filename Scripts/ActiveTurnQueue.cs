@@ -143,13 +143,13 @@ namespace battler.Scripts
         var result = battler.AI.Choose();
         actionData = result.Action;
         targets = result.Targets;
-        GD.Print($"{Name} attacks {targets[0].Name} with action {actionData.Label}");
+        GD.Print($"{battler.Name} attacks {targets[0].Name} with action {actionData.Label}");
       }
     
       // Create a new attack action based on the action data and targets
       var action = new AttackAction(actionData, battler, targets.ToArray());
       await battler.Act(action);
-      await ToSignal(battler, nameof(Battler.ActionFinished));
+      //await ToSignal(battler, nameof(Battler.ActionFinished));
 
       if (battler.IsPlayerControlled)
       {

@@ -53,7 +53,7 @@ namespace battler.Scripts.AI
       var battleInfo = GatherInformation();
 
       var targets = new List<Battler>();
-      var action = nextActions.Count == 0 ? nextActions.Dequeue() : ChooseAction(battleInfo);
+      var action = nextActions.Count != 0 ? nextActions.Dequeue() : ChooseAction(battleInfo);
       if (action.IsTargetingSelf)
       {
         targets.Add(actor);

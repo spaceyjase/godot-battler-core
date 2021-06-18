@@ -8,7 +8,6 @@ namespace battler.Scripts.AI
   {
     protected override ActionData ChooseAction(BattleInfo info)
     {
-      GD.Print(info);
       return info.StongestAction;
     }
 
