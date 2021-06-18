@@ -6,7 +6,7 @@ namespace battler.Scripts.StatusEffects
 {
   public class StatusEffectSlow : StatusEffect
   {
-    public float SpeedReduction
+    private float SpeedReduction
     {
       get => speedReduction;
       set => speedReduction = Mathf.Clamp(value, 0.01f, 0.99f);

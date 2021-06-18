@@ -6,7 +6,7 @@ namespace battler.Scripts.StatusEffects
 {
   public class StatusEffectHaste : StatusEffect
   {
-    public float SpeedBonus { get; set; }
+    private float SpeedBonus { get; }
     
     private Guid statModifierId;
 

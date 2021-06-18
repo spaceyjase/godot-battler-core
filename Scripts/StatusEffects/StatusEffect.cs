@@ -69,11 +69,9 @@ namespace battler.Scripts.StatusEffects
       Start();
     }
 
-    protected abstract void Start();
+    protected virtual void Start() { }
 
-    protected virtual void Apply()
-    {
-    }
+    protected virtual void Apply() { }
 
     private void Expire()
     {
