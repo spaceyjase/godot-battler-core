@@ -1,15 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/Battler.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/BattlerAnim.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scripts/StatusEffects/StatusEffectContainer.cs" type="Script" id=3]
 
 [node name="Battler" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="BattlerAnim" parent="." instance=ExtResource( 2 )]
-
-[node name="StatusEffectContainer" type="Node" parent="."]
-script = ExtResource( 3 )
 
 [connection signal="AnimationFinished" from="BattlerAnim" to="." method="OnBattlerAnimAnimationFinished"]

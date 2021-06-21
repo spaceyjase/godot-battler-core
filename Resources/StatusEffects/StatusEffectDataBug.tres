@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/StatusEffects/StatusEffectData.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+effect = "bug"
+durationSeconds = 20.0
+effectPower = 0.0
+effectRate = 0.0
+isTicking = true
+tickingIntervalSeconds = 4.0
+tickingDamage = 3

@@ -1,6 +1,7 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/AttackActionData.cs" type="Script" id=1]
+[ext_resource path="res://Resources/StatusEffects/StatusEffectDataBug.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
@@ -12,3 +13,4 @@ isTargetingAll = false
 readinessSaved = 20.0
 damageMultiplier = 0.8
 hitChance = 100.0
+statusEffect = ExtResource( 2 )

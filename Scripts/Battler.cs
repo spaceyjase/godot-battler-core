@@ -198,10 +198,10 @@ namespace battler.Scripts
       {
         TakeDamage(hit.Damage);
         EmitSignal(nameof(DamageTaken), hit.Damage);
-        if (hit.Effect != null)
-        {
-          ApplyStatusEffect(hit.Effect);
-        }
+        if (hit.Effect == null) return;
+        
+        ApplyStatusEffect(hit.Effect);
+        GD.Print($"Applying effect {hit.Effect.Id} to {Name}");
       }
       else
       {
