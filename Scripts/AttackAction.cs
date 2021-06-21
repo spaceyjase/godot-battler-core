@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using battler.Scenes;
+using battler.Scripts.StatusEffects;
 using Godot;
 using Godot.Collections;
 
@@ -27,9 +28,10 @@ namespace battler.Scripts
       var anim = actor.BattlerAnimation;
       foreach (var target in targets)
       {
+        var status = StatusEffectBuilder.CreateStatusEffect(target, (data as AttackActionData)?.StatusEffect);
         var hitChance = Formulas.Formulas.CalculateHitChance(data as AttackActionData, actor, target);
         var damage = CalculatePotentialDamageFor(target);
-        var hit = new Hit(damage, hitChance);
+        var hit = new Hit(damage, hitChance, status);
 
         if (!anim.IsConnected(nameof(BattlerAnim.Triggered), this, nameof(OnBattlerAnimTriggered)))
         {

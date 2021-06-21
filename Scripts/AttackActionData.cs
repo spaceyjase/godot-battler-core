@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using battler.Scripts.StatusEffects;
+using Godot;
 
 namespace battler.Scripts
 {
@@ -6,13 +7,21 @@ namespace battler.Scripts
   {
     [Export] private float damageMultiplier = 1f;
     [Export] private float hitChance = 100f;
+    [Export] private StatusEffectData statusEffect;
 
     public float DamageMultiplier => damageMultiplier;
     public float HitChance => hitChance;
+    public StatusEffectData StatusEffect => statusEffect;
 
     public float CalculatePotentialDamageFor(Battler actor)
     {
-      return Formulas.Formulas.CalculatePotentialDamage(this, actor);
+      var totalDamage = Formulas.Formulas.CalculatePotentialDamage(this, actor);
+      if (statusEffect != null)
+      {
+        totalDamage += statusEffect.CalculateTotalDamage();
+      }
+
+      return totalDamage;
     }
   }
 }

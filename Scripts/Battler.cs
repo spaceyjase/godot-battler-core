@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using battler.Scenes;
 using battler.Scripts.AI;
+using battler.Scripts.StatusEffects;
 using Godot;
 using Godot.Collections;
 
@@ -35,6 +36,8 @@ namespace battler.Scripts
     private bool isSelectable;
     private BattlerAnim battlerAnim;
     private BattlerAI aiInstance;
+    private StatusEffectContainer statusEffectContainer;
+    private float timeScale = 1f;
 
     public bool IsPartyMember => isPartyMember;
     public Array<ActionData> Actions => actions;
@@ -42,7 +45,15 @@ namespace battler.Scripts
     public bool IsFallen => stats.Health <= 0f;
   
     // The turn queue will change this property when another battler is acting
-    public float TimeScale { get; set; } = 1.0f;
+    public float TimeScale
+    {
+      get => timeScale;
+      set
+      {
+        timeScale = value;
+        statusEffectContainer.TimeScale = value;
+      }
+    }
 
     public void Setup(IEnumerable<Battler> battlers)
     {
@@ -82,6 +93,7 @@ namespace battler.Scripts
       set
       {
         isActive = value;
+        statusEffectContainer.IsActive = isActive;
         SetProcess(isActive);
       }
     }
@@ -147,6 +159,9 @@ namespace battler.Scripts
     {
       base._Ready();
 
+      statusEffectContainer = new StatusEffectContainer();
+      AddChild(statusEffectContainer);
+
       if (stats == null)
       {
         throw new ApplicationException("Stats are null");
@@ -183,11 +198,20 @@ namespace battler.Scripts
       {
         TakeDamage(hit.Damage);
         EmitSignal(nameof(DamageTaken), hit.Damage);
+        if (hit.Effect != null)
+        {
+          ApplyStatusEffect(hit.Effect);
+        }
       }
       else
       {
         EmitSignal(nameof(HitMissed));
       }
+    }
+
+    private void ApplyStatusEffect(StatusEffect effect)
+    {
+      statusEffectContainer.Add(effect);
     }
 
     public async Task Act(Action action)

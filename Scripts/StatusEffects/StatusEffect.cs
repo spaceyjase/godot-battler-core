@@ -73,7 +73,7 @@ namespace battler.Scripts.StatusEffects
 
     protected virtual void Apply() { }
 
-    private void Expire()
+    public void Expire()
     {
       ExpireImpl();
     }
