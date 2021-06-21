@@ -24,6 +24,7 @@ namespace battler.Scripts.StatusEffects
     public float EffectPower => effectPower;
     public float EffectRate => effectRate;
     public int TickingDamage => tickingDamage;
+    public string Effect => effect;
 
     // The total theoretical damage the effect will inflict over time (for ticking effects).
     public float CalculateTotalDamage()
