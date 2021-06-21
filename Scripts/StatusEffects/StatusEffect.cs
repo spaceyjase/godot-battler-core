@@ -15,9 +15,9 @@ namespace battler.Scripts.StatusEffects
     protected Battler target;
     private bool isActive = true;
 
-    public string Id { get; set; } = "base_effect";
+    public string Id { get; protected set; } = "base_effect";
     public float TimeScale { get; set; } = 1f;
-    public bool CanStack { get; set; }
+    public bool CanStack { get; protected set; }
     public float TimeLeft => timeLeftSeconds;
     
     public float DurationSeconds
@@ -44,10 +44,7 @@ namespace battler.Scripts.StatusEffects
       }
     }
 
-    protected StatusEffect()
-    {
-      
-    }
+    protected StatusEffect() { }
 
     protected StatusEffect(Battler target, StatusEffectData data)
     {
