@@ -29,6 +29,7 @@ namespace battler.Scripts
     // Can be used to design weak attacks that allow you to take a turn fast, etc.
     public float ReadinessSaved => readinessSaved;
     public int EnergyCost => energyCost;
+    public Texture Icon => icon;
 
     public bool CanBeUsedBy(Battler battler) => energyCost <= battler.Stats.Energy;
   }
