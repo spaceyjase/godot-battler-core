@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using battler.Scripts.UI;
 using Godot;
 
 namespace battler.Scripts
 {
   public class ActiveTurnQueue : Node
   {
+    [Export] private PackedScene uiActionMenuScene;
+    
     // Emit a signal when play turn has finished. Used to play the next battler's turn.
     [Signal] private delegate void PlayerTurnFinished();
     
@@ -159,8 +162,16 @@ namespace battler.Scripts
 
     private async Task<ActionData> PlayerSelectAction(Battler battler)
     {
-      await ToSignal(GetTree(), "idle_frame");
-      return battler.Actions[0];
+      //await ToSignal(GetTree(), "idle_frame");
+      //return battler.Actions[0];
+      var actionMenu = uiActionMenuScene.Instance<UIActionMenu>();
+      AddChild(actionMenu);
+      
+      var awaiter = ToSignal(actionMenu, nameof(UIActionMenu.ActionSelected));
+      actionMenu.Open(battler);
+      await awaiter;
+
+      return awaiter.GetResult()[0] as ActionData;
     }
 
     private async Task<List<Battler>> PlayerSelectTargets(ActionData actionData, List<Battler> potentialTargets)

@@ -17,13 +17,13 @@ namespace battler.Scripts.UI
     }
 
     // Called from a parent UI widget. Initialises the button.
-    public async Task Setup(ActionData action, bool canBeUsed)
+    public void Setup(ActionData action, bool canBeUsed)
     {
       // Wait until the button is ready...
-      if (!IsInsideTree())
-      {
-        await ToSignal(this, "ready");
-      }
+      // if (!IsInsideTree())
+      // {
+      //   await ToSignal(this, "ready");
+      // }
 
       if (action.Icon != null)
       {

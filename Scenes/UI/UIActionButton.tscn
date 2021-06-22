@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/UI/menu_action_bg_pressed.png" type="Texture" id=1]
 [ext_resource path="res://Assets/UI/menu_action_bg_focused.png" type="Texture" id=2]
@@ -6,12 +6,14 @@
 [ext_resource path="res://Assets/UI/menu_action_bg.png" type="Texture" id=4]
 [ext_resource path="res://Assets/UI/icon_punch.svg" type="Texture" id=5]
 [ext_resource path="res://Resources/UI/combat_ui.tres" type="Theme" id=6]
+[ext_resource path="res://Scripts/UI/UIActionButton.cs" type="Script" id=7]
 
 [node name="UIActionButton" type="TextureButton"]
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 1 )
 texture_disabled = ExtResource( 3 )
 texture_focused = ExtResource( 2 )
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -25,7 +27,6 @@ margin_right = -25.0
 margin_bottom = -21.0
 rect_clip_content = true
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -37,10 +38,12 @@ texture = ExtResource( 5 )
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 margin_left = 58.0
-margin_top = 9.0
-margin_right = 172.0
-margin_bottom = 48.0
+margin_top = 10.0
+margin_right = 274.0
+margin_bottom = 47.0
 rect_clip_content = true
 theme = ExtResource( 6 )
-text = "Action"
+text = "Basic attack"
 valign = 1
+
+[connection signal="pressed" from="." to="." method="OnPressed"]

@@ -10,7 +10,8 @@ namespace battler.Scripts.UI
   {
     [Signal] public delegate void ActionSelected(ActionData action);
 
-    private PackedScene actionButtonScene;
+    private readonly PackedScene actionButtonScene = ResourceLoader.Load<PackedScene>(
+      $"res://Scenes/UI/{nameof(UIActionButton)}.tscn");
     private UIMenuSelectArrow selectArrow;
     private bool isDisabled;
     private readonly List<UIActionButton> buttons = new List<UIActionButton>();
@@ -33,7 +34,6 @@ namespace battler.Scripts.UI
       base._Ready();
 
       selectArrow = GetNode<UIMenuSelectArrow>("UIMenuSelectArrow");
-      actionButtonScene = ResourceLoader.Load<PackedScene>($"{nameof(UIActionButton)}.tscn");
     }
 
     public void Setup(Battler battler)
@@ -42,29 +42,25 @@ namespace battler.Scripts.UI
       {
         var canUseAction = battler.Stats.Energy >= action.EnergyCost;
         var actionButton = actionButtonScene.Instance<UIActionButton>();
-        if (actionButton != null)
-        {
-          actionButton.Setup(action, canUseAction);
-          actionButton.Connect("pressed", this, nameof(OnActionButtonPressed),
-            new Array { action });
-          actionButton.Connect("focus_entered", this, nameof(OnActionButtonFocusEntered),
-            new Array { actionButton, battler.UIData.DisplayName, action.EnergyCost });
-          AddChild(actionButton);
-          buttons.Add(actionButton);
-        }
-        else
-        {
-          GD.PrintErr($"{nameof(actionButton)} is null");
-        }
+        
+        buttons.Add(actionButton);
+        AddChild(actionButton);
+        actionButton.Setup(action, canUseAction);
+          
+        actionButton.Connect("pressed", this, nameof(OnActionButtonPressed),
+          new Array { action });
+          
+        actionButton.Connect("focus_entered", this, nameof(OnActionButtonFocusEntered),
+          new Array { actionButton, battler.UIData.DisplayName, action.EnergyCost });
       }
 
-      selectArrow.Position = buttons.First().RectGlobalPosition + 
-                             new Vector2(0f, buttons.First().RectSize.y / 2f);
+      selectArrow.Position = buttons[0].RectGlobalPosition +
+                             new Vector2(0f, buttons[0].RectSize.y / 2f);
     }
 
     public void Focus()
     {
-      buttons.First().GrabFocus();
+      buttons[0].GrabFocus();
     }
 
     private void OnActionButtonFocusEntered(Control button, string displayName, int energyCost)

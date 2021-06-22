@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/Executioner.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/ActiveTurnQueue.cs" type="Script" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://Assets/Backgrounds/grasslands.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/LargeKnight.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/AI/AggresiveBattlerAI.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Resources/UI/LargeKnightBattler.tres" type="Resource" id=9]
+[ext_resource path="res://Scenes/UI/UIActionMenu.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Resources/UI/ExecutionerBattler.tres" type="Resource" id=11]
 
 [node name="CombatDemo" type="Node2D"]
 
@@ -20,6 +23,7 @@ texture = ExtResource( 6 )
 
 [node name="ActiveTurnQueue" type="Node2D" parent="."]
 script = ExtResource( 2 )
+uiActionMenuScene = ExtResource( 10 )
 
 [node name="LargeKnight" parent="ActiveTurnQueue" instance=ExtResource( 7 )]
 position = Vector2( 395.502, 657.906 )
@@ -27,6 +31,7 @@ scale = Vector2( 5, 5 )
 stats = ExtResource( 3 )
 actions = [ ExtResource( 5 ) ]
 isPartyMember = true
+uiData = ExtResource( 9 )
 
 [node name="LargeKnight2" parent="ActiveTurnQueue" instance=ExtResource( 7 )]
 position = Vector2( 266.29, 764.475 )
@@ -34,6 +39,7 @@ scale = Vector2( 5, 5 )
 stats = ExtResource( 3 )
 actions = [ ExtResource( 5 ) ]
 isPartyMember = true
+uiData = ExtResource( 9 )
 
 [node name="Executioner" parent="ActiveTurnQueue" instance=ExtResource( 1 )]
 position = Vector2( 1479.31, 710.139 )
@@ -41,3 +47,4 @@ scale = Vector2( -5, 5 )
 stats = ExtResource( 4 )
 aiScene = ExtResource( 8 )
 actions = [ ExtResource( 5 ) ]
+uiData = ExtResource( 11 )
