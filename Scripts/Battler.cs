@@ -15,6 +15,7 @@ namespace battler.Scripts
     [Export] private PackedScene aiScene;
     [Export] private Array<ActionData> actions;
     [Export] private bool isPartyMember;
+    [Export] private BattlerUIData uiData;
   
     // Emitted when changing 'isSelected'. The UI will react to this for
     // player controlled battlers.
