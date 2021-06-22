@@ -134,6 +134,7 @@ namespace battler.Scripts
 
     public bool IsPlayerControlled => aiScene == null;
     public BattlerAnim BattlerAnimation => battlerAnim;
+    public BattlerUIData UIData => uiData;
 
     public override void _Process(float delta)
     {

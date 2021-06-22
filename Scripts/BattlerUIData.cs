@@ -6,5 +6,8 @@ namespace battler.Scripts
   {
     [Export] private string displayName;
     [Export] private Texture texture;
+
+    public string DisplayName => displayName;
+    public Texture Texture => texture;
   }
 }
