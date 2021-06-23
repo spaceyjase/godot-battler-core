@@ -13,10 +13,8 @@ namespace battler.Scripts.UI
       tween = GetNode<Tween>("Tween");
     }
 
-    public override void _Input(InputEvent @event)
+    public UIMenuSelectArrow()
     {
-      base._Input(@event);
-
       // Need to move independently from our parent.
       SetAsToplevel(true);
     }

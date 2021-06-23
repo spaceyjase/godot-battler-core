@@ -13,6 +13,12 @@ script = ExtResource( 1 )
 texture = ExtResource( 3 )
 offset = Vector2( 0, -16 )
 
+[node name="FrontAnchor" parent="BattlerAnim" index="2"]
+position = Vector2( 16.7322, -14.7436 )
+
+[node name="TopAnchor" parent="BattlerAnim" index="3"]
+position = Vector2( -0.353554, -34.1938 )
+
 [connection signal="AnimationFinished" from="BattlerAnim" to="." method="OnBattlerAnimAnimationFinished"]
 
 [editable path="BattlerAnim"]
