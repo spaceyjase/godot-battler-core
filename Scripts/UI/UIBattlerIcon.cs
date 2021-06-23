@@ -30,6 +30,8 @@ namespace battler.Scripts.UI
       }
     }
 
+    public Vector2 PositionRange { get; set; } = Vector2.Zero;
+
     public enum Types
     {
       Ally,
@@ -38,7 +40,6 @@ namespace battler.Scripts.UI
     }
 
     private readonly Dictionary<Types, Texture> types = new Dictionary<Types,Texture>();
-    private Vector2 positionRange = Vector2.Zero;
     private TextureRect iconNode;
 
     public override void _Ready()
@@ -55,7 +56,7 @@ namespace battler.Scripts.UI
     public void Snap(float ratio)
     {
       var rectPosition = RectPosition;
-      rectPosition.x = Mathf.Lerp(positionRange.x, positionRange.y, ratio);
+      rectPosition.x = Mathf.Lerp(PositionRange.x, PositionRange.y, ratio);
       RectPosition = rectPosition;
     }
   }
