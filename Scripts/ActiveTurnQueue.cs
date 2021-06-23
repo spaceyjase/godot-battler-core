@@ -9,6 +9,7 @@ namespace battler.Scripts
   public class ActiveTurnQueue : Node
   {
     [Export] private PackedScene uiActionMenuScene;
+    [Export] private PackedScene selectArrowScene;
     
     // Emit a signal when play turn has finished. Used to play the next battler's turn.
     [Signal] private delegate void PlayerTurnFinished();
@@ -130,7 +131,12 @@ namespace battler.Scripts
           }
           else
           {
-            targets = await PlayerSelectTargets(actionData, potentialTargets);
+            var target = await PlayerSelectTargets(actionData, potentialTargets);
+            if (target != null)
+            {
+              targets.Add(target);
+            }
+
             await ToSignal(GetTree(), "idle_frame");
           }
           // if the player selected a correct action and target, break.
@@ -162,8 +168,6 @@ namespace battler.Scripts
 
     private async Task<ActionData> PlayerSelectAction(Battler battler)
     {
-      //await ToSignal(GetTree(), "idle_frame");
-      //return battler.Actions[0];
       var actionMenu = uiActionMenuScene.Instance<UIActionMenu>();
       AddChild(actionMenu);
       
@@ -174,10 +178,20 @@ namespace battler.Scripts
       return awaiter.GetResult()[0] as ActionData;
     }
 
-    private async Task<List<Battler>> PlayerSelectTargets(ActionData actionData, List<Battler> potentialTargets)
+    private async Task<Battler> PlayerSelectTargets(ActionData actionData, List<Battler> potentialTargets)
     {
-      await ToSignal(GetTree(), "idle_frame");
-      return opponents;
+      var arrow = selectArrowScene.Instance<UISelectBattlerArrow>();
+      AddChild(arrow);
+
+      var awaiter = ToSignal(arrow, nameof(UISelectBattlerArrow.TargetSelected));
+      arrow.Setup(opponents);
+      await awaiter;
+
+      var target = awaiter.GetResult()[0] as Battler;
+      
+      arrow.QueueFree();
+
+      return target;
     }
 
     private void OnPlayerTurnFinished()

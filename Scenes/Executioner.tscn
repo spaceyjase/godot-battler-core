@@ -14,7 +14,7 @@ texture = ExtResource( 3 )
 offset = Vector2( 0, -16 )
 
 [node name="FrontAnchor" parent="BattlerAnim" index="2"]
-position = Vector2( 16.7322, -14.7436 )
+position = Vector2( 33.7219, -14.7436 )
 
 [node name="TopAnchor" parent="BattlerAnim" index="3"]
 position = Vector2( -0.353554, -34.1938 )
