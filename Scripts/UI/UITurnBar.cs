@@ -7,7 +7,7 @@ namespace battler.Scripts.UI
   public class UITurnBar : Control
   {
     private readonly PackedScene battlerIcon = ResourceLoader.Load<PackedScene>(
-      $"{nameof(UIBattlerIcon)}.tscn");
+      $"res://Scenes/UI/{nameof(UIBattlerIcon)}.tscn");
 
     private TextureRect background;
     private AnimationPlayer animationPlayer;
@@ -28,7 +28,7 @@ namespace battler.Scripts.UI
         var icon = CreateIcon(type, battler.UIData.Texture);
 
         battler.Connect(nameof(Battler.ReadinessChanged), this,
-          nameof(OnBattler_ReadinessChanged), new Array{ icon });
+          nameof(OnBattler_ReadinessChanged), new Array { icon });
         background.AddChild(icon);
       }
     }

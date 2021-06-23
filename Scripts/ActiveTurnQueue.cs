@@ -40,6 +40,8 @@ namespace battler.Scripts
       }
     }
 
+    public IEnumerable<Battler> Battlers => battlers;
+
     private readonly List<Battler> partyMembers = new List<Battler>();
     private readonly List<Battler> opponents = new List<Battler>();
     
