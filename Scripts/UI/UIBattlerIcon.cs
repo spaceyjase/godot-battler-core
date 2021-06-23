@@ -16,6 +16,10 @@ namespace battler.Scripts.UI
       set
       {
         icon = value;
+        if (iconNode == null)
+        {
+          iconNode = GetNode<TextureRect>("Icon");
+        }
         iconNode.Texture = icon;
       }
     }
@@ -42,15 +46,11 @@ namespace battler.Scripts.UI
     private readonly Dictionary<Types, Texture> types = new Dictionary<Types,Texture>();
     private TextureRect iconNode;
 
-    public override void _Ready()
+    public UIBattlerIcon()
     {
-      base._Ready();
-
       types[Types.Ally] = ResourceLoader.Load<Texture>("res://Assets/UI/portrait_bg_ally.png");
       types[Types.Player] = ResourceLoader.Load<Texture>("res://Assets/UI/portrait_bg_player.png");
       types[Types.Enemy] = ResourceLoader.Load<Texture>("res://Assets/UI/portrait_bg_enemy.png");
-
-      iconNode = GetNode<TextureRect>("Icon");
     }
 
     public void Snap(float ratio)
