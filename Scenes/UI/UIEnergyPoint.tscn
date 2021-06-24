@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/UI/energy_point_bg.png" type="Texture" id=1]
+[ext_resource path="res://Assets/UI/energy_point_fill.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/UI/UIEnergyPoint.cs" type="Script" id=3]
+
+[node name="UIEnergyPoint" type="TextureRect"]
+margin_left = 0.749153
+margin_top = -0.374573
+margin_right = 36.0
+margin_bottom = 35.0
+texture = ExtResource( 1 )
+stretch_mode = 4
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fill" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0.262745 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+stretch_mode = 1
+
+[node name="Tween" type="Tween" parent="."]

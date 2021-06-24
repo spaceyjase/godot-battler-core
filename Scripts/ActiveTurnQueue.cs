@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using battler.Scripts.Events;
 using battler.Scripts.UI;
 using Godot;
 
@@ -139,6 +140,8 @@ namespace battler.Scripts
               targets.Add(target);
             }
 
+            EventBus.Instance.EmitSignal(nameof(EventBus.PlayerTargetSelectionDone));
+            
             await ToSignal(GetTree(), "idle_frame");
           }
           // if the player selected a correct action and target, break.

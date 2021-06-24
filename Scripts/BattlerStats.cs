@@ -66,6 +66,7 @@ namespace battler.Scripts
     }
 
     public float MaxHealth => maxHealth;
+    public int MaxEnergy => maxEnergy;
 
     public BattlerStats()
     {
