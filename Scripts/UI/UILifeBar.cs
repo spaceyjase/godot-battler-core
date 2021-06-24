@@ -63,6 +63,7 @@ namespace battler.Scripts.UI
 
     private void OnTween_Completed(Object o, NodePath key)
     {
+      // Play danger animation if less that 20%.
       if (Value < 0.2f * MaxValue)
       {
         animationPlayer.Play("danger");
