@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
+using battler.Scripts.Events;
 using Array = Godot.Collections.Array;
 
 namespace battler.Scripts.UI
@@ -66,6 +65,8 @@ namespace battler.Scripts.UI
     private void OnActionButtonFocusEntered(Control button, string displayName, int energyCost)
     {
       selectArrow.MoveTo(button.RectGlobalPosition + new Vector2(0f, button.RectSize.y / 2f));
+      EventBus.Instance.EmitSignal(
+        nameof(EventBus.CombatActionHovered), displayName, energyCost);
     }
 
     private void OnActionButtonPressed(ActionData action)
