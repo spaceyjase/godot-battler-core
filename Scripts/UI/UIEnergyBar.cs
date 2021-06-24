@@ -5,7 +5,8 @@ namespace battler.Scripts.UI
 {
   public class UIEnergyBar : HBoxContainer
   {
-    private readonly PackedScene uiEnergyPoint = ResourceLoader.Load<PackedScene>($"{nameof(UIEnergyPoint)}.tscn");
+    private readonly PackedScene uiEnergyPoint = ResourceLoader.Load<PackedScene>(
+      $"res://Scenes/UI/{nameof(UIEnergyPoint)}.tscn");
 
     private int maxValue;
     private int value;

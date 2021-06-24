@@ -30,11 +30,11 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -84.0
-margin_top = -56.0
-margin_right = 84.0
-margin_bottom = -16.0
-custom_constants/separation = 16
+margin_left = -168.0
+margin_top = -55.0
+margin_right = 160.0
+margin_bottom = -33.0
+alignment = 1
 
 [node name="Label" type="Label" parent="."]
 self_modulate = Color( 0.74902, 0.823529, 0.901961, 1 )

@@ -5,7 +5,8 @@ namespace battler.Scripts.UI
 {
   public class UIBattlerHUDList : VBoxContainer
   {
-    private readonly PackedScene uiBattlerHud = ResourceLoader.Load<PackedScene>($"{nameof(UIBattlerHUD)}.tscn");
+    private readonly PackedScene uiBattlerHud = ResourceLoader.Load<PackedScene>(
+      $"res://Scenes/UI/{nameof(UIBattlerHUD)}.tscn");
 
     private AnimationPlayer animationPlayer;
 

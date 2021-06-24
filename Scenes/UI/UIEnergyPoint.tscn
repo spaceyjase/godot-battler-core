@@ -5,8 +5,10 @@
 [ext_resource path="res://Scripts/UI/UIEnergyPoint.cs" type="Script" id=3]
 
 [node name="UIEnergyPoint" type="TextureRect"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = 0.749153
+margin_top = -0.374573
+margin_right = 36.0
+margin_bottom = 35.0
 texture = ExtResource( 1 )
 stretch_mode = 4
 script = ExtResource( 3 )
@@ -15,12 +17,10 @@ __meta__ = {
 }
 
 [node name="Fill" type="TextureRect" parent="."]
-modulate = Color( 1, 1, 1, 0.521569 )
-margin_left = -3.0
-margin_top = -2.0
-margin_right = 43.0
-margin_bottom = 42.0
+modulate = Color( 1, 1, 1, 0.262745 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource( 2 )
-expand = true
+stretch_mode = 1
 
 [node name="Tween" type="Tween" parent="."]
