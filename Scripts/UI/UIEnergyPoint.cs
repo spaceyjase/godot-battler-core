@@ -27,7 +27,7 @@ namespace battler.Scripts.UI
         this,
         "modulate",
         colourTransparent,
-        Colors.White, 
+        Colors.Green,
         0.3f);
       tween.Start();
     }

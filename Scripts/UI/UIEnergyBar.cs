@@ -28,7 +28,7 @@ namespace battler.Scripts.UI
         }
         else
         {
-          foreach (var i in Enumerable.Range(this.value, oldValue).Reverse())
+          foreach (var i in Enumerable.Range(oldValue, this.value).Reverse())
           {
             GetChild<UIEnergyPoint>(i).Deselect();
           }
@@ -54,7 +54,7 @@ namespace battler.Scripts.UI
         {
           foreach (var i in Enumerable.Range(oldValue, this.value).Reverse())
           {
-            GetChild<UIEnergyPoint>(i).Disappear();
+            GetChild<UIEnergyPoint>(i - 1).Disappear();
           }
         }
       }

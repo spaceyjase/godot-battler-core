@@ -8,6 +8,7 @@ namespace battler.Scripts.UI
     private UILifeBar lifeBar;
     private UIEnergyBar energyBar;
     private Label label;
+    private AnimationPlayer animationPlayer;
 
     public override void _Ready()
     {
@@ -16,6 +17,7 @@ namespace battler.Scripts.UI
       lifeBar = GetNode<UILifeBar>("UILifeBar");
       energyBar = GetNode<UIEnergyBar>("UIEnergyBar");
       label = GetNode<Label>("Label");
+      animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
       EventBus.Instance.Connect(nameof(EventBus.CombatActionHovered), this, 
         nameof(OnEvents_CombatActionHovered));
@@ -33,6 +35,12 @@ namespace battler.Scripts.UI
 
       stats.Connect(nameof(BattlerStats.HealthChanged), this, nameof(OnBattlerStats_HealthChanged));
       stats.Connect(nameof(BattlerStats.EnergyChanged), this, nameof(OnBattlerStats_EnergyChanged));
+      battler.Connect(nameof(Battler.SelectionToggled), this, nameof(OnBattler_SelectionToggled));
+    }
+
+    private void OnBattler_SelectionToggled(bool selected)
+    {
+      animationPlayer.Play(selected ? "select" : "deselect");
     }
 
     private void OnBattlerStats_HealthChanged(float oldValue, float newValue)
