@@ -21,14 +21,14 @@ namespace battler.Scripts.UI
         selectedCount = Mathf.Clamp(value, 0, maxValue);
         if (selectedCount > oldValue)
         {
-          foreach (var i in Enumerable.Range(oldValue, this.value))
+          foreach (var i in Enumerable.Range(oldValue, selectedCount))
           {
             GetChild<UIEnergyPoint>(i).Select();
           }
         }
         else
         {
-          foreach (var i in Enumerable.Range(oldValue, this.value).Reverse())
+          foreach (var i in Enumerable.Range(selectedCount, oldValue))
           {
             GetChild<UIEnergyPoint>(i).Deselect();
           }
@@ -52,9 +52,9 @@ namespace battler.Scripts.UI
         }
         else
         {
-          foreach (var i in Enumerable.Range(oldValue, this.value).Reverse())
+          foreach (var i in Enumerable.Range(this.value, oldValue))
           {
-            GetChild<UIEnergyPoint>(i - 1).Disappear();
+            GetChild<UIEnergyPoint>(i).Disappear();
           }
         }
       }

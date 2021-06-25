@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/UI/menu_action_bg_pressed.png" type="Texture" id=1]
 [ext_resource path="res://Assets/UI/menu_action_bg_focused.png" type="Texture" id=2]
 [ext_resource path="res://Assets/UI/menu_action_bg_disabled.png" type="Texture" id=3]
 [ext_resource path="res://Assets/UI/menu_action_bg.png" type="Texture" id=4]
-[ext_resource path="res://Assets/UI/icon_punch.svg" type="Texture" id=5]
 [ext_resource path="res://Resources/UI/combat_ui.tres" type="Theme" id=6]
 [ext_resource path="res://Scripts/UI/UIActionButton.cs" type="Script" id=7]
 
@@ -31,15 +30,13 @@ __meta__ = {
 }
 
 [node name="Icon" type="TextureRect" parent="HBoxContainer"]
-margin_right = 54.0
 margin_bottom = 57.0
 rect_clip_content = true
-texture = ExtResource( 5 )
 
 [node name="Label" type="Label" parent="HBoxContainer"]
-margin_left = 58.0
+margin_left = 4.0
 margin_top = 10.0
-margin_right = 274.0
+margin_right = 220.0
 margin_bottom = 47.0
 rect_clip_content = true
 theme = ExtResource( 6 )
