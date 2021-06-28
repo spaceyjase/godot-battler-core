@@ -62,3 +62,7 @@ uiData = ExtResource( 11 )
 [node name="UITurnBar" parent="UI" instance=ExtResource( 13 )]
 
 [node name="UIBattlerHUDList" parent="UI" instance=ExtResource( 15 )]
+anchor_top = 1.0
+margin_top = -336.0
+margin_right = 750.0
+margin_bottom = 0.0
