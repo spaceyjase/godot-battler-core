@@ -8,7 +8,7 @@ namespace battler.Scripts.UI
   {
     [Export] private string text;
 
-    private string Text
+    public string Text
     {
       get => text;
       set
