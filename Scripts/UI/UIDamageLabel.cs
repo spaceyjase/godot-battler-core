@@ -53,7 +53,7 @@ namespace battler.Scripts.UI
         label,
         "rect_position",
         label.RectPosition,
-        label.RectPosition * offset,
+        label.RectPosition + offset,
         0.4f,
         Tween.TransitionType.Quad,
         Tween.EaseType.Out);

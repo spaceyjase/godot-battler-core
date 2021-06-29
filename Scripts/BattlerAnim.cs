@@ -17,7 +17,7 @@ namespace battler.Scenes
       LEFT,
       RIGHT
     }
-
+    
     [Export] private Direction LookDirection { get; set; } = Direction.RIGHT;
 
     public Vector2 FrontAnchorGlobalPosition => frontAnchor.GlobalPosition;

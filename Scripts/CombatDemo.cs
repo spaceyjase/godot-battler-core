@@ -14,6 +14,7 @@ namespace battler.Scripts
     private ActiveTurnQueue activeTurnQueue;
     private UITurnBar uiTurnBar;
     private UIBattlerHUDList uiBattlerHudList;
+    private UIDamageLabelBuilder uiDamageLabelBuilder;
 
     private enum CombatResult
     {
@@ -28,11 +29,13 @@ namespace battler.Scripts
       activeTurnQueue = GetNode<ActiveTurnQueue>("ActiveTurnQueue");
       uiTurnBar = GetNode<UITurnBar>("UI/UITurnBar");
       uiBattlerHudList = GetNode<UIBattlerHUDList>("UI/UIBattlerHUDList");
+      uiDamageLabelBuilder = GetNode<UIDamageLabelBuilder>("UI/UIDamageLabelBuilder");
 
       var party = activeTurnQueue.Battlers.Where(battler => battler.IsPartyMember).ToList();
 
       uiTurnBar.Setup(activeTurnQueue.Battlers);
       uiBattlerHudList.Setup(party);
+      uiDamageLabelBuilder.Setup(activeTurnQueue.Battlers);
 
       foreach (var battler in activeTurnQueue.Battlers)
       {
