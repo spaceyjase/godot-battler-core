@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/UI/Fonts/text_extralarge.tres" type="DynamicFont" id=1]
+
+[node name="UIDamageLabel" type="Position2D"]
+
+[node name="Label" type="Label" parent="."]
+margin_left = -57.6391
+margin_top = -47.6758
+margin_right = 58.3609
+margin_bottom = 10.3242
+custom_fonts/font = ExtResource( 1 )
+text = "999"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
